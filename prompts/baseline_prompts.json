@@ -1,0 +1,505 @@
+{
+    "prompt_only": {
+        "system_prompt": "You are tasked with directly extracting medical entities from the provided medical text. Your goal is to extract specific entities and return them in a structured JSON format as specified for each label. If the entity is not present in the text, include an empty string (\"\") for the text field. Ensure the JSON output is accurate and adheres to the described format.",
+        "labels": {
+            "age": {
+                "description": "The age of the patient.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Age"
+                }
+            },
+            "sex": {
+                "description": "The sex or gender of the patient.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Sex"
+                }
+            },
+            "biological_structure": {
+                "description": "Any part of the body, from the cellular level to general areas.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Biological structure"
+                }
+            },
+            "sign_symptom": {
+                "description": "Any symptom or clinical finding.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Sign symptom"
+                }
+            },
+            "diagnostic_procedure": {
+                "description": "Any procedure done primarily in order to obtain more information.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Diagnostic procedure"
+                }
+            },
+            "lab_value": {
+                "description": "Any result of a laboratory test or a diagnostic result, including any units or values present",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Lab value"
+                }
+            },
+            "detailed_description": {
+                "description": "Any detail of an event or other entity.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Detailed description"
+                }
+            },
+            "disease": {
+                "description": "The disease entity.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "DISEASE"
+                },
+                "display_name": "disease"
+            }
+        }
+    },
+    "few_shot_prompting": {
+        "system_prompt": "You are tasked with performing Named Entity Recognition on medical text. Your goal is to extract specific entities and return them in a structured JSON format as specified for each label. If the entity is not present in the text, include an empty string (\"\") for the text field. Ensure the JSON output is accurate and adheres to the described format.",
+        "labels": {
+            "age": {
+                "description": "The age of the patient.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Age"
+                },
+                "example_1": {
+                    "input": "A 31-year-old man developed diabetes insipidus with urine volume up to 10 to 20 L every 24 hours in 2003.",
+                    "output": [
+                        {
+                            "text": "31-year-old",
+                            "label": "Age"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "A 60-year-old woman patient was admitted to our hospital on Feb. 18, 2016 because of frequent episodes of hemoptysis for 2 weeks.",
+                    "output": [
+                        {
+                            "text": "60-year-old",
+                            "label": "Age"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "Bronchoscopy showed a 1-cm lesion at the membranous trachea 2 cm to the carina.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Age"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "Physical examination revealed a blood pressure = 100/60 mm Hg, pulse = 60 beats/min, no jaundice, no stigmata of chronic liver disease, a soft abdomen with mild epigastric tenderness but no rebound tenderness, no abdominal bruit, and no pulsatile abdominal mass.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Age"
+                        }
+                    ]
+                }
+            },
+            "sex": {
+                "description": "The sex or gender of the patient.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Sex"
+                },
+                "example_1": {
+                    "input": "A 31-year-old man developed diabetes insipidus with urine volume up to 10 to 20 L every 24 hours in 2003.",
+                    "output": [
+                        {
+                            "text": "man",
+                            "label": "Sex"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "A 60-year-old woman patient was admitted to our hospital on Feb. 18, 2016 because of frequent episodes of hemoptysis for 2 weeks.",
+                    "output": [
+                        {
+                            "text": "woman",
+                            "label": "Sex"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "Approximately six months after her operation, our patient started having slowly progressing dysphagia for both solids and liquids.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Sex"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "Physical examination revealed a blood pressure = 100/60 mm Hg, pulse = 60 beats/min, no jaundice, no stigmata of chronic liver disease, a soft abdomen with mild epigastric tenderness but no rebound tenderness, no abdominal bruit, and no pulsatile abdominal mass.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Sex"
+                        }
+                    ]
+                }
+            },
+            "biological_structure": {
+                "description": "Any part of the body, from the cellular level to general areas.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Biological Structure"
+                },
+                "example_1": {
+                    "input": "Our patient had an esophagogastroduodenoscopy (EGD) and barium swallow that revealed no stricture of her esophagus but failure of primary and secondary peristaltic waves and reflux.",
+                    "output": [
+                        {
+                            "text": "esophagus",
+                            "label": "Biological Structure"
+                        },
+                        {
+                            "text": "primary and secondary peristaltic waves",
+                            "label": "Biological Structure"
+                        },
+                        {
+                            "text": "reflux",
+                            "label": "Biological Structure"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "A second opinion was requested from the University of Colorado and a computed tomography–guided biopsy of the left upper lobe lesion was performed to permit additional molecular testing.",
+                    "output": [
+                        {
+                            "text": "left upper lobe",
+                            "label": "Biological Structure"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "Unfortunately, after two cycles his shortness of breath worsened, with evidence of further progression on his scans (Fig.1A).",
+                    "output": {
+                        "text": "",
+                        "label": "Biological Structure"
+                    }
+                },
+                "example_4": {
+                    "input": "Mild anemia was observed (hemoglobin, 11.3 g/dL), although hemoglobin levels had been 14.6 g/dL prior to the hemoptysis episode.",
+                    "output": {
+                        "text": "",
+                        "label": "Biological Structure"
+                    }
+                }
+            },
+            "sign_symptom": {
+                "description": "Any symptom or clinical finding.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Sign symptom"
+                },
+                "example_1": {
+                    "input": "Mild anemia was observed (hemoglobin, 11.3 g/dL), although hemoglobin levels had been 14.6 g/dL prior to the hemoptysis episode.",
+                    "output": [
+                        {
+                            "text": "anemia",
+                            "label": "Sign symptom"
+                        },
+                        {
+                            "text": "hemoptysis",
+                            "label": "Sign symptom"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "A 47-year-old woman presented to the hospital with a 1-month history of abdominal distention.",
+                    "output": [
+                        {
+                            "text": "distention",
+                            "label": "Sign symptom"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "The peripheral blood test showed elevated levels of carcinoembryonic antigen (CEA, 335.2 ng/mL [normal, <5 ng/mL]) and carbohydrate antigen (CA) 125 (219 U/mL [normal, <45 U/mL]) but a normal level of CA19-9 (9 U/mL [normal, <37 U/mL]).",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Sign symptom"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "Bilateral oophorectomy, total hysterectomy, omentectomy, and sigmoidectomy with regional node dissection were performed (Fig.3a).",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Sign symptom"
+                        }
+                    ]
+                }
+            },
+            "diagnostic_procedure": {
+                "description": "Any procedure done primarily in order to obtain more information.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Diagnostic procedure"
+                },
+                "example_1": {
+                    "input": "Immunohistochemically, tumor cells from the ovaries and the colon both showed positive expression of cytokeratin 20 (CK20) but no expression of cytokeratin 7 (CK7), confirming that the ovarian tumors were metastases from primary colon cancer (Fig.4a, ​b).",
+                    "output": [
+                        {
+                            "text": "Immunohistochemically",
+                            "label": "Diagnostic procedure"
+                        },
+                        {
+                            "text": "cytokeratin 20",
+                            "label": "Diagnostic procedure"
+                        },
+                        {
+                            "text": "CK20",
+                            "label": "Diagnostic procedure"
+                        },
+                        {
+                            "text": "cytokeratin 7",
+                            "label": "Diagnostic procedure"
+                        },
+                        {
+                            "text": "CK7",
+                            "label": "Diagnostic procedure"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "His morphological features were: (a) normal mouth opening with missing lower incisors (Fig.1); (b) small chest, as determined by a cardiothoracic examination; and (c) disproportionately short extremities with one additional postaxial digit on each hand (Fig.2).",
+                    "output": [
+                        {
+                            "text": "morphological features",
+                            "label": "Diagnostic procedure"
+                        },
+                        {
+                            "text": "cardiothoracic examination",
+                            "label": "Diagnostic procedure"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "Although no sensory-motor deficit was noted, the patient presented with mild mental retardation.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Diagnostic procedure"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "A right thoracotomy was performed on the fourth intercostal space and bicaval cannulation was established.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Diagnostic procedure"
+                        }
+                    ]
+                }
+            },
+            "lab_value": {
+                "description": "Any result of a laboratory test or a diagnostic result, including any units or values present.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Lab value"
+                },
+                "example_1": {
+                    "input": "Pulmonary function tests (PFT) showed a mild restrictive ventilatory defect, with a reduced total lung capacity of 79% (5.94 L), forced vital capacity of 80% (4.18 L) and a forced expiratory volume in one second of 83% (3.72 L).",
+                    "output": [
+                        {
+                            "text": "reduced",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "79%",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "5.94 L",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "80%",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "4.18 L",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "83%",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "3.72 L",
+                            "label": "Lab value"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "After two years of follow-up, echocardiography revealed optimal function of the mitral valve and a decrease in systolic pulmonary artery pressure (30 mmHg).",
+                    "output": [
+                        {
+                            "text": "optimal function",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "decrease",
+                            "label": "Lab value"
+                        },
+                        {
+                            "text": "30 mmHg",
+                            "label": "Lab value"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "Based on this finding, HRCT scan was obtained, revealing diffuse ground glass attenuation and septal thickening, more pronounced in lower pulmonary regions, with calcifications along the interlobar septa and subpleural regions.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Lab value"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "The patient underwent a fiberoptic bronchoscopy with bronchoalveolar lavage and transbronchial lung biopsy.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Lab value"
+                        }
+                    ]
+                }
+            },
+            "detailed_description": {
+                "description": "Any detail of an event or other entity.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Detailed description"
+                },
+                "example_1": {
+                    "input": "He developed multifocal salmon-pink skin discoloration, and swelling and spontaneous pain in the left knee and leg.",
+                    "output": [
+                        {
+                            "text": "multifocal",
+                            "label": "Detailed description"
+                        },
+                        {
+                            "text": "spontaneous",
+                            "label": "Detailed description"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "We examined the genomic heat shock protein (HSP) 60 sequence of the blood culture isolate, which resulted in identification of cluster B H. cinaedi.",
+                    "output": [
+                        {
+                            "text": "blood culture isolate",
+                            "label": "Detailed description"
+                        },
+                        {
+                            "text": "cluster B",
+                            "label": "Detailed description"
+                        }
+                    ]
+                },
+                "example_3": {
+                    "input": "His medical condition had been almost stable for 14 years.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Detailed description"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "His serum creatinine level was stabilized at 1.7 mg/dL with maintenance immunosuppressive therapy comprising tacrolimus (3 mg/day), mycophenolate mofetil (1500 mg/day), and prednisone (4 mg every other day).",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "Detailed description"
+                        }
+                    ]
+                }
+            },
+            "disease": {
+                "description": "The disease entity.",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "DISEASE"
+                },
+                "example_1": {
+                    "input": "Mutations in this gene are responsible for Pendred syndrome and autosomal recessive non-syndromic hearing loss at the DFNB4 locus on chromosome 7q31.",
+                    "output": [
+                        {
+                            "text": "Pendred syndrome",
+                            "label": "DISEASE"
+                        },
+                        {
+                            "text": "autosomal recessive non-syndromic hearing loss",
+                            "label": "DISEASE"
+                        },
+                        {
+                            "text": "DFNB4",
+                            "label": "DISEASE"
+                        }
+                    ]
+                },
+                "example_2": {
+                    "input": "Two missense mutations causing mild hyperphenylalaninemia associated with DNA haplotype 12.",
+                    "output": [
+                        {
+                            "text": "hyperphenylalaninemia",
+                            "label": "DISEASE"
+                        }
+                    ]
+                },
+                "example_4": {
+                    "input": "The effects of the mutations at the mRNA and protein level were ascertained by RT-PCR and Western blot analyses.",
+                    "output": [
+                        {
+                            "text": "",
+                            "label": "DISEASE"
+                        }
+                    ]
+                },
+                "display_name": "disease"
+            }
+        }
+    },
+    "instruction_training": {
+        "system_prompt": "You are tasked with directly extracting medical entities from the provided medical text. Your goal is to extract specific entities and return them in a structured JSON format as specified for each label. Ensure the JSON output is accurate and adheres to the described format.",
+        "labels": {
+            "no_label": {
+                "description": "No description",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Age"
+                }
+            }
+        }
+    },
+    "conversational_training": {
+        "system_prompt": "You are tasked with performing Named Entity Recognition on medical text. Your goal is to extract specific entities and return them in a structured JSON format as specified for each label. Ensure the JSON output is accurate and adheres to the described format.",
+        "labels": {
+            "no_label": {
+                "description": "No description",
+                "output_structure": {
+                    "text": "extracted value",
+                    "label": "Label name"
+                }
+            }
+        }
+    }
+}

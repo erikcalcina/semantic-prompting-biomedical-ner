@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="610" viewBox="0 0 1280 610" role="img" aria-labelledby="t d">
+  <title id="t">Semantic prompting for biomedical NER</title>
+  <desc id="d">A medical sentence is given to five LLMs with a baseline prompt or a semantically enhanced prompt, in zero-shot, few-shot and fine-tuned settings. The JSON output is evaluated with Exact F1, Relaxed F1 and the McNemar test on MACCROBAT2020 and the NCBI Disease Corpus.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .card { fill: #f6f8fa; stroke: #d0d7de; stroke-width: 1; }
+    .card-accent { fill: #effaf8; stroke: #5fb3a8; stroke-width: 1.5; }
+    .text { fill: #1f2328; }
+    .muted { fill: #59636e; }
+    .accent { fill: #0f766e; }
+    .ent1 { fill: #b45309; }
+    .ent2 { fill: #7c3aed; }
+    .ent3 { fill: #be123c; }
+    .ent4 { fill: #1d4ed8; }
+    .group { fill: none; stroke: #d0d7de; stroke-width: 1.5; stroke-dasharray: 5 5; }
+    .chip { fill: #ffffff; stroke: #d0d7de; stroke-width: 1; }
+    .line { stroke: #8c959f; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .head { fill: #8c959f; }
+    .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; }
+      .card-accent { fill: #0f2a27; stroke: #2a9d8f; }
+      .text { fill: #e6edf3; }
+      .muted { fill: #9198a1; }
+      .accent { fill: #4fd1c5; }
+      .ent1 { fill: #f59e0b; }
+      .ent2 { fill: #a78bfa; }
+      .ent3 { fill: #fb7185; }
+      .ent4 { fill: #60a5fa; }
+      .group { stroke: #30363d; }
+      .chip { fill: #0d1117; stroke: #30363d; }
+      .line { stroke: #6e7681; }
+      .head { fill: #6e7681; }
+    }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1280" height="610" rx="14"/>
+
+  <!-- Header -->
+  <text class="sans text" x="32" y="50" font-size="26" font-weight="700">Semantically enriched prompts for biomedical NER</text>
+  <text class="sans muted" x="32" y="78" font-size="15">Does adding a semantic description of each entity label to the prompt help LLMs extract biomedical entities?</text>
+
+  <!-- Stage labels -->
+  <g class="sans accent" font-size="13" font-weight="700" letter-spacing="1.2">
+    <text x="32" y="116">1  INPUT</text>
+    <text x="332" y="116">2  PROMPT</text>
+    <text x="702" y="116">3  MODEL</text>
+    <text x="992" y="116">4  OUTPUT &amp; EVALUATION</text>
+  </g>
+
+  <!-- 1 Input -->
+  <rect class="card" x="32" y="136" width="260" height="300" rx="10"/>
+  <text class="sans muted" x="52" y="164" font-size="13" font-weight="600">Medical text</text>
+  <g class="sans text" font-size="15">
+    <text x="52" y="194">A <tspan class="ent1" font-weight="700">56-year-old</tspan> African</text>
+    <text x="52" y="217">American <tspan class="ent2" font-weight="700">man</tspan> who initially</text>
+    <text x="52" y="240">presented with <tspan class="ent3" font-weight="700">diarrhea</tspan>,</text>
+    <text x="52" y="263"><tspan class="ent3" font-weight="700">weight loss</tspan> and <tspan class="ent4" font-weight="700">painless</tspan></text>
+    <text x="52" y="286"><tspan class="ent3" font-weight="700">jaundice</tspan>, …</text>
+  </g>
+  <text class="sans muted" x="52" y="318" font-size="13" font-weight="600">Entity labels</text>
+  <g class="sans" font-size="13" font-weight="600">
+    <rect class="chip" x="52" y="328" width="48" height="26" rx="13"/>
+    <text class="ent1" x="76" y="345" text-anchor="middle">Age</text>
+    <rect class="chip" x="108" y="328" width="46" height="26" rx="13"/>
+    <text class="ent2" x="131" y="345" text-anchor="middle">Sex</text>
+    <rect class="chip" x="162" y="328" width="110" height="26" rx="13"/>
+    <text class="ent3" x="217" y="345" text-anchor="middle">Sign symptom</text>
+    <rect class="chip" x="52" y="362" width="168" height="26" rx="13"/>
+    <text class="ent4" x="136" y="379" text-anchor="middle">Detailed description</text>
+  </g>
+  <g class="sans muted" font-size="13">
+    <text x="52" y="410">+ Biological structure, Diagnostic</text>
+    <text x="52" y="428">procedure, Lab value</text>
+  </g>
+
+  <!-- Prompt group: the two prompts are alternatives -->
+  <rect class="group" x="322" y="128" width="350" height="316" rx="14"/>
+  <text class="sans muted" x="497" y="258" font-size="12" font-weight="600" text-anchor="middle">vs.</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <path class="line" d="M294,286 H312"/>
+  <path class="head" d="M311,280 L321,286 L311,292 Z"/>
+
+  <!-- 2 Prompt: baseline -->
+  <rect class="card" x="332" y="136" width="330" height="106" rx="10"/>
+  <text class="sans muted" x="352" y="164" font-size="13" font-weight="600">Baseline prompt</text>
+  <g class="mono text" font-size="13.5">
+    <text x="352" y="194">Please extract the age of the</text>
+    <text x="352" y="214">patient.</text>
+  </g>
+
+  <!-- 2 Prompt: semantic -->
+  <rect class="card-accent" x="332" y="266" width="330" height="170" rx="10"/>
+  <text class="sans accent" x="352" y="294" font-size="13" font-weight="700">Semantically enhanced prompt</text>
+  <g class="mono text" font-size="13.5">
+    <text x="352" y="324">Please extract the <tspan class="accent" font-weight="700">duration of</tspan></text>
+    <text x="352" y="344" class="accent" font-weight="700">time a patient has lived,</text>
+    <text x="352" y="364" class="accent" font-weight="700">expressed numerically (e.g.,</text>
+    <text x="352" y="384" class="accent" font-weight="700">'65-year-old', '20 years old')</text>
+    <text x="352" y="404" class="accent" font-weight="700">or categorically (e.g.,</text>
+    <text x="352" y="424" class="accent" font-weight="700">'newborn', 'teenage'), …</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <path class="line" d="M674,286 H692"/>
+  <path class="head" d="M691,280 L701,286 L691,292 Z"/>
+
+  <!-- 3 Model -->
+  <rect class="card" x="702" y="136" width="250" height="300" rx="10"/>
+  <text class="sans muted" x="722" y="164" font-size="13" font-weight="600">5 open LLMs, 4-bit</text>
+  <g class="sans text" font-size="14">
+    <text x="722" y="192">Llama-3.1-8B-Instruct</text>
+    <text x="722" y="214">Meta-Llama-3.1-8B</text>
+    <text x="722" y="236">Llama-3.2-3B-Instruct</text>
+    <text x="722" y="258">DeepSeek-Qwen-7B</text>
+    <text x="722" y="280">TxGemma-9B-Chat</text>
+  </g>
+  <text class="sans muted" x="722" y="318" font-size="13" font-weight="600">3 settings</text>
+  <g class="sans" font-size="13" font-weight="600">
+    <rect class="chip" x="722" y="330" width="210" height="28" rx="14"/>
+    <text class="text" x="827" y="349" text-anchor="middle">Zero-shot</text>
+    <rect class="chip" x="722" y="364" width="210" height="28" rx="14"/>
+    <text class="text" x="827" y="383" text-anchor="middle">Few-shot (k = 3)</text>
+    <rect class="chip" x="722" y="398" width="210" height="28" rx="14"/>
+    <text class="text" x="827" y="417" text-anchor="middle">Fine-tuned (LoRA)</text>
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <path class="line" d="M954,186 H982"/>
+  <path class="head" d="M981,180 L991,186 L981,192 Z"/>
+
+  <!-- 4 Output -->
+  <rect class="card" x="992" y="136" width="256" height="100" rx="10"/>
+  <text class="sans muted" x="1012" y="164" font-size="13" font-weight="600">JSON output</text>
+  <g class="mono text" font-size="13.5">
+    <text x="1012" y="192">[{"text": <tspan class="ent1" font-weight="700">"56-year-old"</tspan>,</text>
+    <text x="1012" y="212">  "label": <tspan class="ent1" font-weight="700">"Age"</tspan>}]</text>
+  </g>
+
+  <!-- Connector output -> evaluation -->
+  <path class="line" d="M1120,236 V252"/>
+  <path class="head" d="M1114,251 L1120,261 L1126,251 Z"/>
+
+  <!-- 4 Evaluation -->
+  <rect class="card" x="992" y="262" width="256" height="174" rx="10"/>
+  <text class="sans muted" x="1012" y="290" font-size="13" font-weight="600">Evaluation</text>
+  <g class="sans">
+    <text class="text" x="1012" y="320" font-size="15" font-weight="700">Exact F1</text>
+    <text class="muted" x="1012" y="339" font-size="13">same text and same label</text>
+    <text class="text" x="1012" y="368" font-size="15" font-weight="700">Relaxed F1</text>
+    <text class="muted" x="1012" y="387" font-size="13">same label, contains the gold text</text>
+    <text class="text" x="1012" y="418" font-size="15" font-weight="700">McNemar test <tspan class="muted" font-size="13" font-weight="400">p &lt; 0.01</tspan></text>
+  </g>
+
+  <!-- Datasets -->
+  <text class="sans accent" x="32" y="484" font-size="13" font-weight="700" letter-spacing="1.2">DATASETS</text>
+  <rect class="card" x="32" y="498" width="600" height="80" rx="10"/>
+  <text class="sans text" x="52" y="530" font-size="16" font-weight="700">MACCROBAT2020</text>
+  <text class="sans muted" x="52" y="555" font-size="14">200 clinical case reports · 7 entity types evaluated (41 in fine-tuning)</text>
+  <rect class="card" x="648" y="498" width="600" height="80" rx="10"/>
+  <text class="sans text" x="668" y="530" font-size="16" font-weight="700">NCBI Disease Corpus</text>
+  <text class="sans muted" x="668" y="555" font-size="14">793 PubMed abstracts · 1 entity type (disease)</text>
+</svg>
